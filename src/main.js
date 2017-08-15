@@ -16,15 +16,39 @@ Vue.use(ElementUI)
 
 const whiteList = ['/login'] // 免登录白名单
 router.beforeEach((to, from, next) => {
-  NProgress.start() // 开启登录页面的进度条
-
-  if (getToken()) { // 判断是否取到token
-
+  NProgress.start()  // 开启登录页面的进度条
+  if (getToken()) {  // 判断是否取到token
+    if (to.path === '/login') {
+      next({ path: '/' })
+    } else {
+      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+        store.dispatch('GetInfo').then(res => { // 拉取user_info
+          const roles = res.data.role
+          console.log('xxx')
+          console.log(roles)
+          // store.dispatch('GenerateRoutes', { roles }).then(() => { // 生成可访问的路由表
+          //   router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+          //   alert('111')
+          //   next({ ...to }) // hack方法 确保addRoutes已完成
+          // })
+          next({ ...to })
+        }).catch(() => {
+          store.dispatch('FedLogOut').then(() => {
+            alert('222')
+            next({ path: '/login' })
+          })
+        })
+      } else {
+        alert('next')
+        next()
+      }
+    }
   } else {
     if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单里的路径，继续让其访问
       next()
-    } else { // 其他不在白名单里的路径全部让其重定向到登录页面！
+    } else {                                 // 其他不在白名单里的路径全部让其重定向到登录页面！
       next('/login')
+      alert('not in white list, now go to the login page')
       NProgress.done()
     }
   }
