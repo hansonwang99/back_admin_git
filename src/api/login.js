@@ -20,7 +20,6 @@ export function logout () {
 }
 
 export function getInfo (token) {
-  alert('getinfo')
   return fetch({
     url: 'https://easy-mock.com/mock/598eb2fea1d30433d85f00f1/codesheep/user/info',
     method: 'get',

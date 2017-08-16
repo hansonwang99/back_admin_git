@@ -77,7 +77,6 @@
               this.$router.push({ path: '/' })
                 //  this.showDialog = true
             }).catch(() => {
-              alert('fail')
               this.loading = false
             })
           } else {
