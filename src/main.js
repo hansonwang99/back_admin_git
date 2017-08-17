@@ -18,7 +18,7 @@ const whiteList = ['/login'] // 免登录白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()  // 开启登录页面的进度条
   if (getToken()) {  // 判断是否取到token
-    alert('用户已经拿到token')
+    // alert('用户已经拿到token')
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
           })
         })
       } else {
-        alert('用户已经拿到了user_info')
+        // alert('用户已经拿到了user_info')
         next() // 放行该路由
       }
     }

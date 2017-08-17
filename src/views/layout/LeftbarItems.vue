@@ -1,23 +1,29 @@
 <template>
-    <div>
-        <el-submenu index="1">
-            <template slot="title">
-                <i class="el-icon-message"></i>
-                <span slot="title">导航一</span>
-            </template>
-            <el-menu-item-group>
-                <span slot="title">分组一</span>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-                <span slot="title">选项4</span>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-        </el-submenu>
+    <div class="menu-wrapper">
+
+        <template v-for="item in barItems">
+
+			<router-link v-if="item.nodrop&&!item.hidden" :to="item.path">
+				<el-menu-item :index="item.path"  class='submenu-title-noDropdown'>
+					<span slot="title">{{item.name}}</span>
+				</el-menu-item>
+			</router-link>
+
+			<el-submenu v-if="!item.hidden&&!item.nodrop" :index="item.name">
+				<template slot="title">
+					<span>{{item.name}}</span>
+				</template>
+				<template v-for="child in item.children" v-if='!child.hidden'>
+					<LeftbarItems class='nest-menu' v-if='child.children&&child.children.length>0' :barItems='[child]'> </LeftbarItems>
+					<router-link v-else :to="item.path+'/'+child.path">
+						<el-menu-item :index="item.path+'/'+child.path">
+							<span>{{child.name}}</span>
+						</el-menu-item>
+					</router-link>
+				</template>
+			</el-submenu>
+
+		</template>
     </div>
 </template>
 
