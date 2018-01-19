@@ -90,6 +90,57 @@ export const asyncRouter = [
         hidden: false
       }
     ]
+  },
+  {
+    path: '/ecs',
+    name: '云主机',
+    component: _import('layout/Layout'),
+    nodrop: false,
+    hidden: false,
+    children: [
+      {
+        path: 'instance',
+        name: '实例',
+        component: _import('ecs/Instance'),
+        nodrop: true,
+        hidden: false
+      },
+      {
+        path: 'clouddrive',
+        component: _import('ecs/Instance'),
+        name: '云硬盘',
+        nodrop: true,
+        hidden: false
+      },
+      {
+        path: 'clouddrivesnapshot',
+        component: _import('ecs/Instance'),
+        name: '云硬盘快照',
+        nodrop: true,
+        hidden: false
+      },
+      {
+        path: 'image',
+        component: _import('ecs/Instance'),
+        name: '镜像',
+        nodrop: true,
+        hidden: false
+      },
+      {
+        path: 'safetygroup',
+        component: _import('ecs/Instance'),
+        name: '安全组',
+        nodrop: true,
+        hidden: false
+      },
+      {
+        path: 'sshkey',
+        component: _import('ecs/Instance'),
+        name: 'SSH密钥',
+        nodrop: true,
+        hidden: false
+      }
+    ]
   }
 ]
 
